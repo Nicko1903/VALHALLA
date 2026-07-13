@@ -2,10 +2,281 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Website Pertama Saya</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joki Wall CoC - VALHALLA Clone</title>
+    <style>
+        /* Gaya Desain (CSS) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1c23;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            background-color: #242631;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            color: #f39c12;
+            margin: 5px 0;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: #a0a5b5;
+            margin: 0;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 15px 0 8px 0;
+            color: #e2e8f0;
+        }
+
+        .info-text {
+            font-size: 12px;
+            color: #e74c3c;
+            margin-bottom: 12px;
+        }
+
+        /* Desain Dropdown / Pilihan Level */
+        select {
+            width: 100%;
+            padding: 12px;
+            background-color: #1a1c23;
+            color: white;
+            border: 1px solid #4a4d61;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .price-tag {
+            font-size: 14px;
+            color: #2ecc71;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        /* Desain Counter Jumlah Tembok */
+        .counter-container {
+            display: flex;
+            align-items: center;
+            background-color: #1a1c23;
+            border: 1px solid #4a4d61;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 150px;
+        }
+
+        .counter-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            width: 45px;
+            height: 40px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .counter-btn:hover {
+            background-color: #2d303f;
+        }
+
+        .counter-value {
+            flex: 1;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Total & Subtotal */
+        .summary-box {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #3f4257;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .total-price {
+            font-size: 18px;
+            color: #f1c40f;
+            font-weight: bold;
+        }
+
+        /* Desain Tombol Aksi */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .btn-cart {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        .btn-cart:hover {
+            background-color: #d6860b;
+        }
+
+        .btn-wa {
+            background-color: #25d366;
+            color: white;
+        }
+
+        .btn-wa:hover {
+            background-color: #1ebd59;
+        }
+
+        .features-list {
+            margin-top: 15px;
+            background-color: #1a1c23;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #cbd5e1;
+        }
+    </style>
 </head>
 <body>
-    <h1>Halo Dunia!</h1>
-    <p>Website ini berhasil dibuat menggunakan GitHub Pages.</p>
+
+    <div class="container">
+        <!-- Bagian Judul -->
+        <div class="header">
+            <h1>Joki Wall CoC</h1>
+            <p>⚔ Clash of Clans ⚔</p>
+        </div>
+
+        <!-- Pilihan Level -->
+        <div class="section-title"># Joki Wall</div>
+        <div class="info-text">1 · Pilih Level Tujuan Bukan Level Sekarang</div>
+        <select id="levelSelect" onchange="updateHarga()">
+            <option value="25">Level 8 — Rp 25/tembok</option>
+            <option value="50">Level 9 — Rp 50/tembok</option>
+            <option value="100">Level 10 — Rp 100/tembok</option>
+            <option value="200">Level 11 — Rp 200/tembok</option>
+        </select>
+        <div class="price-tag" id="pricePerWall">Rp 25/tembok</div>
+
+        <!-- Jumlah Tembok -->
+        <div class="section-title">2 · Jumlah & Tambah</div>
+        <div class="counter-container">
+            <button class="counter-btn" onclick="ubahJumlah(-1)">−</button>
+            <div class="counter-value" id="wallCount">1</div>
+            <button class="counter-btn" onclick="ubahJumlah(1)">+</button>
+        </div>
+
+        <!-- Ringkasan Belanja -->
+        <div class="summary-box">
+            <div class="summary-row">
+                <span>Subtotal:</span>
+                <span id="subtotalText">Rp 25</span>
+            </div>
+            <div class="summary-row" style="font-weight: bold;">
+                <span>Total:</span>
+                <span class="total-price" id="totalText">Rp 25</span>
+            </div>
+        </div>
+
+        <!-- Fitur Termasuk -->
+        <div class="features-list">
+            <strong>📋 Termasuk:</strong> Upgrade Hero · Harga dihitung per tembok
+        </div>
+
+        <!-- Tombol Tambah Keranjang & WhatsApp -->
+        <div class="btn-group">
+            <button class="btn btn-cart" onclick="tambahKeranjang()">+ Keranjang</button>
+            <button class="btn btn-wa" onclick="chatWA()">WhatsApp</button>
+        </div>
+    </div>
+
+    <!-- Sistem Perhitungan (JavaScript) -->
+    <script>
+        let jumlahTembok = 1;
+
+        function updateHarga() {
+            const select = document.getElementById("levelSelect");
+            const hargaPerTembok = parseInt(select.value);
+            
+            // Update teks harga per tembok
+            document.getElementById("pricePerWall").innerText = `Rp ${hargaPerTembok}/tembok`;
+            
+            hitungTotal();
+        }
+
+        function ubahJumlah(nilai) {
+            jumlahTembok += nilai;
+            if (jumlahTembok < 1) jumlahTembok = 1; // Minimal 1 tembok
+            
+            document.getElementById("wallCount").innerText = jumlahTembok;
+            hitungTotal();
+        }
+
+        function hitungTotal() {
+            const select = document.getElementById("levelSelect");
+            const hargaPerTembok = parseInt(select.value);
+            const total = hargaPerTembok * jumlahTembok;
+
+            // Update teks subtotal dan total
+            document.getElementById("subtotalText").innerText = `Rp ${total.toLocaleString('id-ID')}`;
+            document.getElementById("totalText").innerText = `Rp ${total.toLocaleString('id-ID')}`;
+        }
+
+        function tambahKeranjang() {
+            alert("Item berhasil ditambahkan ke keranjang belanja!");
+        }
+
+        function chatWA() {
+            const select = document.getElementById("levelSelect");
+            const levelTeks = select.options[select.selectedIndex].text;
+            const total = parseInt(select.value) * jumlahTembok;
+            
+            // Format pesan otomatis ke WhatsApp
+            const pesan = `Halo YoukaStore, saya mau order Joki Wall CoC:\n- Pilihan: ${levelTeks}\n- Jumlah: ${jumlahTembok} tembok\n- Total: Rp ${total.toLocaleString('id-ID')}`;
+            
+            // Ganti nomor di bawah ini dengan nomor WhatsApp Anda (Gunakan kode negara, misal 62812xxxx)
+            const nomorWA = "6281234567890"; 
+            window.open(`https://wa.me{nomorWA}?text=${encodeURIComponent(pesan)}`, '_blank');
+        }
+    </script>
 </body>
 </html>
