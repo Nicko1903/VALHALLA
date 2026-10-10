@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joki Wall Clash of Clans</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle, #1a0f05 0%, #070402 100%);
+            color: #ebd9c5;
+        }
+        .font-coc {
+            font-family: 'Cinzel', serif;
+        }
+        .card-active {
+            border-color: #cca353 !important;
+            background: linear-gradient(135deg, #241407 0%, #130a03 100%) !important;
+            box-shadow: 0 0 15px rgba(204, 163, 83, 0.25);
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 sm:p-6">
+
+    <div class="w-full max-w-md bg-[#0a0603] border border-[#231508] rounded-3xl shadow-2xl overflow-hidden pb-6">
+        
+        <div class="text-center pt-8 pb-4 px-6">
+            <div class="flex items-center justify-center space-x-2 text-[10px] tracking-[0.3em] text-[#cca353] font-extrabold uppercase mb-1">
+                <span>⚔</span>
+                <span>Clash of Clans</span>
+                <span>⚔</span>
+            </div>
+            <h1 class="text-3xl font-black font-coc tracking-wider text-white uppercase drop-shadow-lg">
+                Joki <span class="text-[#cca353]">Wall</span>
+            </h1>
+            <p class="text-[10px] text-[#8c6d50] mt-1 tracking-wide">Pilih level · Input jumlah · Kirim ke WhatsApp</p>
+        </div>
+
+        <div class="px-5 space-y-6">
+            
+            <!-- BAGIAN 1: PILIH LEVEL TUJUAN -->
+            <div>
+                <div class="flex items-center mb-4">
+                    <span class="font-coc text-xs text-[#cca353] font-bold mr-2">1 •</span>
+                    <h2 class="text-[10px] tracking-[0.12em] text-[#a58463] font-extrabold uppercase">Pilih Level Tujuan Bukan Level Sekarang</h2>
+                    <div class="flex-grow h-[1px] bg-[#231508] ml-3"></div>
+                </div>
+
+                <div id="grid-level" class="grid grid-cols-3 gap-3">
+                </div>
+            </div>
+
+            <!-- BAGIAN 2: JUMLAH & KIRIM -->
+            <div>
+                <div class="flex items-center mb-4">
+                    <span class="font-coc text-xs text-[#cca353] font-bold mr-2">2 •</span>
+                    <h2 class="text-[10px] tracking-[0.12em] text-[#a58463] font-extrabold uppercase">Jumlah & Tambah</h2>
+                    <div class="flex-grow h-[1px] bg-[#231508] ml-3"></div>
+                </div>
+
+                <div class="bg-[#140b04] rounded-2xl p-4 border border-[#231508] space-y-4">
+                    
+                    <div class="flex items-center justify-between border-b border-[#231508]/60 pb-4">
+                        <div class="flex items-center space-x-3">
+                            <div id="preview-icon-container" class="w-12 h-12 rounded-xl bg-[#0a0603] border border-[#cca353]/20 flex items-center justify-center p-1">
+                            </div>
+                            <div>
+                                <h3 id="selected-level-name" class="font-bold text-sm text-white">Level 8</h3>
+                                <p id="selected-level-unit-price" class="text-xs text-[#a58463]">Rp 25/tembok</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between py-1">
+                        <span class="text-xs font-bold uppercase text-[#a58463] tracking-wider">Jumlah Tembok</span>
+                        <div class="flex items-center bg-[#070402] border border-[#231508] rounded-xl p-1">
+                            <button onclick="changeQuantity(-1)" class="w-8 h-8 flex items-center justify-center text-[#cca353] hover:bg-[#1f1308] active:scale-95 rounded-lg transition font-bold text-lg select-none">-</button>
+                            <input id="qty-input" type="number" min="1" value="1" oninput="handleManualInput(this)" class="w-14 text-center bg-transparent text-sm font-bold text-white focus:outline-none">
+                            <button onclick="changeQuantity(1)" class="w-8 h-8 flex items-center justify-center text-[#cca353] hover:bg-[#1f1308] active:scale-95 rounded-lg transition font-bold text-lg select-none">+</button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between border-t border-[#231508]/60 pt-4 pb-1">
+                        <span class="text-xs font-bold uppercase text-[#a58463] tracking-wider">Subtotal</span>
+                        <span id="subtotal-val" class="text-xl font-black text-[#cca353]">RP 25</span>
+                    </div>
+
+                    <button onclick="kirimKeWhatsApp()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#ca9418] to-[#e4be73] hover:from-[#e4be73] hover:to-[#ca9418] text-[#130b04] font-black text-xs uppercase tracking-widest active:scale-[0.99] transition-all duration-150 shadow-md shadow-[#cca353]/10 flex items-center justify-center gap-2">
+                        <span>💬</span> CHAT LANGSUNG / TANYA ADMIN
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // ================= GANTI NOMOR WHATSAPP ANDA DI SINI =================
+        const noWhatsApp = "6289649453434"; 
+        // =====================================================================
+
+        // TIP MENGUBAH GAMBAR:
+        // Anda bisa mengisi properti 'image' dengan URL gambar (misal: 'https://...)
+        // Jika 'image' dikosongkan (""), otomatis sistem akan memakai gambar/ikon SVG bawaan.
+        const wallLevels = [
+            { level: 8, price: 25, color: '#3f434a', image: '/8.jpg' },
+            { level: 9, price: 45, color: '#1c2430', image: '/9.jpg' },
+            { level: 10, price: 65, color: '#d9531e', image: '/10.jpg' },
+            { level: 11, price: 85, color: '#dc2626', image: '/11.jpg' },
+            { level: 12, price: 100, color: '#e2e8f0', image: '/12.jpg' },
+            { level: 13, price: 150, color: '#0284c7', image: '/13.jpg' },
+            { level: 14, price: 200, color: '#7c3aed', image: '/14.jpg' },
+            { level: 15, price: 250, color: '#ca8a04', image: '/15.jpg' },
+            { level: 16, price: 300, color: '#0d9488', image: '/16.jpg' },
+            { level: 17, price: 350, color: '#be123c', image: '/17.jpg' },
+            { level: 18, price: 400, color: '#854d0e', image: '/18.jpg' },
+            { level: 19, price: 500, color: '#31108f', image: '/19.jpg' }
+        ];
+
+        let selectedLevelId = 8;
+        let quantity = 1;
+
+        // Fungsi penampil gambar (bisa berupa URL gambar atau fallback ke SVG bawaan)
+        function renderWallMedia(item) {
+            if (item.image && item.image.trim() !== "") {
+                return `<img src="${item.image}" alt="Wall Level ${item.level}" class="w-10 h-10 object-contain">`;
+            } else {
+                return `
+                    <svg viewBox="0 0 64 64" class="w-10 h-10">
+                        <defs>
+                            <linearGradient id="grad-${item.level}" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="${item.color}" />
+                                <stop offset="100%" stop-color="#090502" />
+                            </linearGradient>
+                        </defs>
+                        <rect x="18" y="12" width="28" height="42" rx="4" fill="url(#grad-${item.level})" stroke="#231508" stroke-width="2"/>
+                        <line x1="18" y1="26" x2="46" y2="26" stroke="#120a04" stroke-width="2"/>
+                        <line x1="18" y1="40" x2="46" y2="40" stroke="#120a04" stroke-width="2"/>
+                        <circle cx="32" cy="19" r="3" fill="#cca353" opacity="0.8"/>
+                    </svg>
+                `;
+            }
+        }
+
+        function renderLevels() {
+            const grid = document.getElementById("grid-level");
+            grid.innerHTML = wallLevels.map(item => {
+                const isActive = item.level === selectedLevelId;
+                return `
+                    <div id="card-lvl-${item.level}" onclick="selectLevel(${item.level})" 
+                         class="cursor-pointer bg-[#130a04] border border-[#231508] rounded-2xl p-3 flex flex-col items-center justify-center transition-all duration-200 text-center group hover:border-[#cca353]/60 ${isActive ? 'card-active' : ''}">
+                        
+                        <div class="mb-2 transition-transform duration-200 group-hover:scale-110">
+                            ${renderWallMedia(item)}
+                        </div>
+
+                        <span class="text-[9px] font-extrabold text-[#a58463] tracking-wider uppercase">Level ${item.level}</span>
+                        <span class="text-xs font-black text-[#cca353] mt-1">Rp ${item.price}</span>
+                        <span class="text-[7px] text-gray-500 mt-0.5">per tembok</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function selectLevel(levelId) {
+            const prevCard = document.getElementById(`card-lvl-${selectedLevelId}`);
+            if (prevCard) prevCard.classList.remove('card-active');
+
+            selectedLevelId = levelId;
+
+            const newCard = document.getElementById(`card-lvl-${levelId}`);
+            if (newCard) newCard.classList.add('card-active');
+
+            updateCalculator();
+        }
+
+        function updateCalculator() {
+            const activeData = wallLevels.find(item => item.level === selectedLevelId);
+            if (!activeData) return;
+
+            document.getElementById("selected-level-name").innerText = `Level ${activeData.level}`;
+            document.getElementById("selected-level-unit-price").innerText = `Rp ${activeData.price}/tembok`;
+            document.getElementById("preview-icon-container").innerHTML = renderWallMedia(activeData);
+
+            calculateSubtotal(activeData.price);
+        }
+
+        function calculateSubtotal(unitPrice) {
+            const activeData = wallLevels.find(item => item.level === selectedLevelId);
+            const price = unitPrice || activeData.price;
+            const subtotal = price * quantity;
+            document.getElementById("subtotal-val").innerText = `RP ${subtotal.toLocaleString('id-ID')}`;
+        }
+
+        function changeQuantity(val) {
+            quantity = Math.max(1, quantity + val);
+            document.getElementById("qty-input").value = quantity;
+            updateCalculator();
+        }
+
+        function handleManualInput(inputElement) {
+            let parsedVal = parseInt(inputElement.value);
+            if (isNaN(parsedVal) || parsedVal < 1) {
+                parsedVal = 1;
+            }
+            quantity = parsedVal;
+            updateCalculator();
+        }
+
+        function kirimKeWhatsApp() {
+            const activeData = wallLevels.find(item => item.level === selectedLevelId);
+            if (!activeData) return;
+
+            const subtotal = activeData.price * quantity;
+            
+            const teksPesan = `Halo Admin, saya ingin memesan *Joki Wall Clash of Clans* ⚔%0A%0A` +
+                              `*Detail Pesanan:*%0A` +
+                              `• Target Tembok: Level ${activeData.level}%0A` +
+                              `• Jumlah Tembok: ${quantity.toLocaleString('id-ID')} unit%0A` +
+                              `• Harga per unit: Rp ${activeData.price}%0A%0A` +
+                              `*Total Pembayaran:*%0A` +
+                              `• *Rp ${subtotal.toLocaleString('id-ID')}*%0A%0A` +
+                              `Mohon info instruksi selanjutnya untuk proses pengerjaan. Terima kasih!`;
+
+            window.open(`https://wa.me/${noWhatsApp}?text=${teksPesan}`, '_blank');
+        }
+
+        renderLevels();
+        updateCalculator();
+    </script>
+</body>
+</html>
