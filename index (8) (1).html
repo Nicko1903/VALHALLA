@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10101c">
+<title>WALHALLA STORE — JOKI WALL COC</title>
+
+<style>
+:root {
+  --bg:#0f0f19;
+  --panel:#191a30;
+  --line:#2b2d4a;
+  --text:#f7f7fb;
+  --muted:#9293a9;
+  --yellow:#ffd21c;
+  --orange:#ff9200;
+  --green:#22d36d;
+}
+
+* { box-sizing:border-box; }
+
+html {
+  scroll-behavior:smooth;
+  scroll-padding-top:20px;
+}
+
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  line-height:1.55;
+}
+
+body.light {
+  --bg:#f3f4fb;
+  --panel:#fff;
+  --line:#dedff0;
+  --text:#20213a;
+  --muted:#70738a;
+}
+
+.wrap {
+  width:min(1120px,calc(100% - 32px));
+  margin:auto;
+}
+
+.top {
+  padding:14px 0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.theme {
+  position:fixed;
+  right:18px;
+  top:18px;
+  z-index:5;
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:var(--text);
+  border-radius:40px;
+  padding:9px 15px;
+  font-size:23px;
+  cursor:pointer;
+}
+
+.ticker {
+  margin:20px 0 38px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:18px 20px;
+  overflow:hidden;
+}
+
+.ticker strong {
+  color:var(--yellow);
+  display:block;
+  margin-bottom:8px;
+}
+
+.ticker-line {
+  white-space:nowrap;
+  overflow:hidden;
+}
+
+.ticker-line span {
+  margin-right:32px;
+  color:var(--muted);
+}
+
+.ticker b { color:var(--yellow); }
+
+.hero {
+  border:1px solid var(--line);
+  background:linear-gradient(135deg,#1a1b32,#191f3b);
+  border-radius:30px;
+  padding:62px 24px;
+  text-align:center;
+  margin-bottom:55px;
+}
+
+.hero .shield {
+  font-size:88px;
+  line-height:1.3;
+}
+
+.hero h1 {
+  font-size:clamp(30px,5vw,48px);
+  margin:22px 0;
+  color:var(--orange);
+}
+
+.hero p {
+  color:#a4a5bd;
+  font-size:clamp(17px,2.6vw,25px);
+  margin:16px 0 48px;
+}
+
+.btn {
+  border:0;
+  border-radius:50px;
+  padding:16px 28px;
+  font-weight:750;
+  font-size:17px;
+  text-decoration:none;
+  display:inline-block;
+  cursor:pointer;
+}
+
+.primary {
+  background:linear-gradient(100deg,#ffd500,#ff9200);
+  color:#191528;
+}
+
+.outline {
+  border:3px solid var(--yellow);
+  color:var(--yellow);
+  background:transparent;
+  margin:16px 8px 0;
+}
+
+.steps {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin-bottom:40px;
+}
+
+.step,.product,.feature,.review,.faq details {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:22px;
+}
+
+.step {
+  text-align:center;
+  padding:32px 15px;
+}
+
+.step .num { font-size:52px; }
+
+.step h3 { margin:14px 0 8px; }
+
+.muted { color:var(--muted); }
+
+.alert {
+  background:linear-gradient(100deg,#ff4058,#ff6688);
+  color:white;
+  border-radius:20px;
+  text-align:center;
+  padding:24px;
+  font-size:19px;
+  font-weight:650;
+  margin:32px 0 35px;
+}
+
+h2 {
+  font-size:clamp(24px,3.4vw,34px);
+  color:var(--yellow);
+  margin:35px 0 22px;
+}
+
+.products {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+
+.product {
+  position:relative;
+  text-align:center;
+  padding:24px 20px 22px;
+  min-width:0;
+}
+
+.product.popular {
+  border:2px solid var(--yellow);
+}
+
+.tag {
+  position:absolute;
+  top:-15px;
+  left:50%;
+  transform:translateX(-50%);
+  background:linear-gradient(90deg,#ffd400,#ff9200);
+  color:#302400;
+  border-radius:30px;
+  padding:5px 18px;
+  font-size:13px;
+  font-weight:850;
+  white-space:nowrap;
+}
+
+/* GAMBAR TEMBOK */
+.wall {
+  height:120px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:10px;
+}
+
+.wall img {
+  display:block;
+  width:100%;
+  max-width:115px;
+  height:110px;
+  object-fit:contain;
+  border-radius:12px;
+  filter:drop-shadow(0 6px 8px #0007);
+  transition:transform .2s ease;
+}
+
+.product:hover .wall img {
+  transform:scale(1.08);
+}
+
+.product h3 {
+  font-size:23px;
+  margin:8px 0;
+}
+
+.price {
+  color:var(--yellow);
+  font-size:27px;
+  font-weight:800;
+  margin:8px 0;
+}
+
+.qty {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin:20px 0 16px;
+}
+
+.qty button,.qty input {
+  height:48px;
+  min-width:48px;
+  border:1px solid #353754;
+  background:var(--bg);
+  color:var(--text);
+  border-radius:13px;
+  font-size:20px;
+  text-align:center;
+}
+
+.qty input { width:82px; }
+
+.qty button { cursor:pointer; }
+
+.add {
+  width:100%;
+  border:2px solid var(--yellow);
+  border-radius:13px;
+  background:transparent;
+  color:var(--yellow);
+  font-weight:800;
+  font-size:17px;
+  padding:11px;
+  cursor:pointer;
+}
+
+.add:hover,.outline:hover {
+  background:#ffd21c18;
+}
+
+.features {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin:45px 0;
+}
+
+.feature {
+  text-align:center;
+  padding:28px 10px;
+  color:var(--muted);
+  font-size:18px;
+}
+
+.feature span {
+  display:block;
+  font-size:42px;
+  margin-bottom:8px;
+}
+
+.reviews {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+.review { padding:26px; }
+
+.reviewtop {
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
+
+.avatar {
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#f48fb1,#efb3c7);
+  font-size:23px;
+  flex-shrink:0;
+}
+
+.review:nth-child(2) .avatar {
+  background:linear-gradient(135deg,#6379ec,#8c59ba);
+}
+
+.stars {
+  color:var(--yellow);
+  letter-spacing:2px;
+}
+
+.faq {
+  display:grid;
+  gap:12px;
+  margin-bottom:55px;
+}
+
+.faq details { padding:20px 24px; }
+
+.faq summary {
+  cursor:pointer;
+  font-size:18px;
+  font-weight:600;
+  list-style:none;
+}
+
+.faq summary:after {
+  content:"▾";
+  float:right;
+  color:var(--muted);
+}
+
+.faq details[open] summary:after { content:"▴"; }
+
+.faq p {
+  color:var(--muted);
+  margin-bottom:0;
+}
+
+.cartbar {
+  position:sticky;
+  bottom:12px;
+  z-index:4;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  background:#20213aee;
+  border:1px solid #424566;
+  backdrop-filter:blur(12px);
+  padding:14px 18px;
+  border-radius:18px;
+  margin:20px auto;
+  box-shadow:0 8px 30px #0005;
+}
+
+.cartbar strong { color:var(--yellow); }
+
+.chat {
+  position:fixed;
+  right:20px;
+  bottom:22px;
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  background:var(--green);
+  display:grid;
+  place-items:center;
+  font-size:35px;
+  text-decoration:none;
+  box-shadow:0 0 30px #22d36d66;
+  z-index:6;
+}
+
+.footer {
+  text-align:center;
+  padding:28px 0 45px;
+  color:var(--muted);
+  border-top:1px solid var(--line);
+}
+
+@media(min-width:900px) {
+  .hero { padding:75px 24px; }
+  .products { grid-template-columns:repeat(4,minmax(0,1fr)); }
+}
+
+@media(max-width:650px) {
+  .wrap { width:calc(100% - 28px); }
+
+  .ticker { margin:14px 0 24px; padding:14px; }
+
+  .hero {
+    border-radius:24px;
+    padding:46px 18px;
+    margin-bottom:38px;
+  }
+
+  .hero .shield { font-size:75px; }
+  .hero p { margin-bottom:32px; }
+
+  .btn {
+    width:100%;
+    font-size:16px;
+    padding:15px 10px;
+  }
+
+  .outline { width:auto; min-width:190px; }
+
+  .steps { grid-template-columns:1fr; gap:14px; }
+
+  .step { padding:25px 12px; }
+  .step .num { font-size:46px; }
+
+  .products {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;
+  }
+
+  .product {
+    padding:20px 12px 16px;
+    border-radius:19px;
+  }
+
+  .wall { height:100px; }
+
+  .wall img {
+    max-width:95px;
+    height:90px;
+  }
+
+  .product h3 { font-size:19px; }
+  .price { font-size:23px; }
+  .qty { gap:6px; }
+
+  .qty button,.qty input {
+    height:43px;
+    min-width:40px;
+  }
+
+  .qty input { width:58px; }
+
+  .add {
+    font-size:14px;
+    padding:10px 3px;
+  }
+
+  .features {
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin:32px 0;
+  }
+
+  .feature { padding:22px 8px; font-size:15px; }
+  .feature span { font-size:35px; }
+  .reviews { grid-template-columns:1fr; }
+  .review { padding:22px; }
+
+  .alert { font-size:16px; padding:20px 14px; }
+
+  .cartbar {
+    bottom:8px;
+    padding:12px;
+    font-size:14px;
+  }
+
+  .chat {
+    width:62px;
+    height:62px;
+    font-size:29px;
+    right:14px;
+    bottom:92px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<button class="theme" id="theme" aria-label="Ganti tema">🌙</button>
+
+<header class="top">
+  <div class="wrap">🟢 WALHALLA STORE · JOKI WALL COC TERPERCAYA</div>
+</header>
+
+<main class="wrap">
+
+<section class="ticker">
+  <strong>🔴 Order Terbaru — LIVE</strong>
+  <div class="ticker-line">
+    <span>● Citra order 290 Level 12 <b>4 jam lalu</b></span>
+    <span>● Dika order 118 Level 19 <b>22 jam lalu</b></span>
+    <span>● Rafi order 220 Level 16 <b>1 hari lalu</b></span>
+  </div>
+</section>
+
+<section class="hero">
+  <div class="shield">🛡️</div>
+  <h1>JOKI WALL COC</h1>
+  <p>Upgrade tembok cepat, aman, &amp; harga terjangkau</p>
+  <a class="btn primary" id="chatHero" href="#harga">
+    💬 Chat Admin — Hitungin Harga
+  </a>
+  <br>
+  <a class="btn outline" href="#harga">🧮 Lihat Harga</a>
+</section>
+
+<h2>⚡ Cara Pesan</h2>
+
+<section class="steps">
+  <article class="step">
+    <div class="num">1️⃣</div>
+    <h3>Pilih Level</h3>
+    <div class="muted">Tentukan level tembok target</div>
+  </article>
+  <article class="step">
+    <div class="num">2️⃣</div>
+    <h3>Chat WhatsApp</h3>
+    <div class="muted">Kirim detail &amp; konfirmasi</div>
+  </article>
+  <article class="step">
+    <div class="num">3️⃣</div>
+    <h3>Selesai!</h3>
+    <div class="muted">Login &amp; tembok sudah naik</div>
+  </article>
+</section>
+
+<div class="alert">
+  ⚡ 3 slot tersisa minggu ini — Order sekarang biar gak kehabisan!
+</div>
+
+<h2 id="harga">
+  📋 Daftar Harga
+  <span class="muted" style="font-size:18px;font-weight:400">
+    (Pilih level tujuan)
+  </span>
+</h2>
+
+<section class="products" id="products"></section>
+
+<section class="features">
+  <div class="feature"><span>🛡️</span>Akun Aman</div>
+  <div class="feature"><span>⚡</span>Proses Cepat</div>
+  <div class="feature"><span>💎</span>Harga Murah</div>
+  <div class="feature"><span>⭐</span>500+ Order</div>
+  <div class="feature"><span>🔄</span>Garansi Refund</div>
+  <div class="feature"><span>🕒</span>Support 24/7</div>
+</section>
+
+<h2>💬 Testimoni</h2>
+
+<section class="reviews">
+  <article class="review">
+    <div class="reviewtop">
+      <div class="avatar">B</div>
+      <div>
+        <b>Budi Santoso.</b>
+        <div class="stars">
+          ★★★★★
+          <span class="muted" style="font-size:14px;letter-spacing:0">3 minggu lalu</span>
+        </div>
+      </div>
+    </div>
+    <p class="muted">
+      "Adminnya sabar banget jelasin. Buat yang baru pertama kali,
+      ini recommended banget."
+    </p>
+  </article>
+
+  <article class="review">
+    <div class="reviewtop">
+      <div class="avatar">H</div>
+      <div>
+        <b>Hadi K.</b>
+        <div class="stars">
+          ★★★★★
+          <span class="muted" style="font-size:14px;letter-spacing:0">1 bulan lalu</span>
+        </div>
+      </div>
+    </div>
+    <p class="muted">
+      "Order malam, paginya udah selesai. Cepet bener prosesnya."
+    </p>
+  </article>
+</section>
+
+<h2>❓ FAQ</h2>
+
+<section class="faq">
+  <details>
+    <summary>Apakah akun saya aman?</summary>
+    <p>Keamanan akun menjadi prioritas. Detail proses dan ketentuan akan dikonfirmasi admin sebelum pengerjaan.</p>
+  </details>
+  <details>
+    <summary>Butuh password gak?</summary>
+    <p>Silakan konfirmasi metode pengerjaan yang tersedia langsung kepada admin.</p>
+  </details>
+  <details>
+    <summary>Berapa lama prosesnya?</summary>
+    <p>Durasi tergantung jumlah tembok dan level target. Admin akan memberikan estimasi setelah detail dikirim.</p>
+  </details>
+  <details>
+    <summary>Bisa refund?</summary>
+    <p>Kebijakan refund dikonfirmasi sebelum transaksi dilakukan.</p>
+  </details>
+  <details>
+    <summary>Bisa joki wall + base sekalian?</summary>
+    <p>Tanyakan ketersediaan layanan tambahan kepada admin.</p>
+  </details>
+  <details>
+    <summary>Kenapa harga beda per level?</summary>
+    <p>Setiap level membutuhkan biaya sumber daya yang berbeda.</p>
+  </details>
+  <details>
+    <summary>Metode pembayaran?</summary>
+    <p>Hubungi admin untuk mendapatkan metode pembayaran yang tersedia.</p>
+  </details>
+</section>
+
+<div class="cartbar">
+  <div>
+    🛒 <span id="cartCount">0</span> item · Total estimasi
+    <strong id="total">Rp 0</strong>
+  </div>
+  <button class="btn primary" style="padding:10px 17px" id="checkout">
+    Pesan via WhatsApp
+  </button>
+</div>
+
+<footer class="footer">
+  © 2026 WALHALLA STORE · JOKI WALL COC
+  <br>
+  <small>Harga dan testimoni pada template ini contoh; sesuaikan sebelum dipublikasikan.</small>
+</footer>
+
+</main>
+
+<a class="chat" id="chatFloat" href="#harga" aria-label="Chat admin">💬</a>
+
+<script>
+// MENGGUNAKAN GAMBAR PLACEHOLDER OTOMATIS (TIDAK PERLU UPLOAD FILE LAGI)
+const items = [
+  {level:8, price:25,  image:"/wall8.jpg"},
+  {level:9, price:45, image:"/wall9.jpg"},
+  {level:10, price:65, image:"/wall10.jpg"},
+  {level:11, price:85, image:"/wall11.jpg"},
+  {level:12, price:100, image:"/wall12.jpg"},
+  {level:13, price:150,  image:"/wall13.jpg"},
+  {level:14, price:200, image:"/wall14.jpg"},
+  {level:15, price:250, image:"/wall15.jpg"},
+  {level:16, price:300, image:"/wall16.jpg", popular:true},
+  {level:17, price:350, image: "/wall17.jpg"},
+  {level:18, price:400, image:"/wall18.jpg", popular:true},
+  {level:19, price:500, image:"/wall19.jpg"}
+];
+
+const cart = {};
+const root = document.getElementById("products");
+
+items.forEach(item => {
+  const level = item.level;
+  const price = item.price;
+
+  cart[level] = 0;
+
+  const card = document.createElement("article");
+  card.className = "product" + (item.popular ? " popular" : "");
+
+  card.innerHTML = `
+    ${item.popular ? '<span class="tag">POPULER</span>' : ""}
+
+    <div class="wall">
+      <img
+        src="${item.image}"
+        alt="Gambar tembok Clash of Clans level ${level}"
+        loading="lazy"
+      >
+    </div>
+
+    <h3>Level ${level}</h3>
+    <div class="price">Rp ${price}</div>
+    <div class="muted">per tembok</div>
+
+    <div class="qty">
+      <button type="button" class="minus" aria-label="Kurangi">−</button>
+      <input
+        aria-label="Jumlah level ${level}"
+        type="number"
+        min="0"
+        max="9999"
+        value="1"
+      >
+      <button type="button" class="plus" aria-label="Tambah">+</button>
+    </div>
+
+    <button class="add" type="button">+ Keranjang</button>
+  `;
+
+  const input = card.querySelector("input");
+  const minus = card.querySelector(".minus");
+  const plus = card.querySelector(".plus");
+
+  minus.onclick = () => {
+    input.value = Math.max(0, (parseInt(input.value) || 0) - 1);
+  };
+
+  plus.onclick = () => {
+    input.value = Math.min(9999, (parseInt(input.value) || 0) + 1);
+  };
+
+  input.addEventListener("change", () => {
+    let value = parseInt(input.value);
+
+    if (isNaN(value)) value = 0;
+
+    input.value = Math.max(0, Math.min(9999, value));
+  });
+
+  card.querySelector(".add").onclick = () => {
+    cart[level] = Math.max(
+      0,
+      Math.min(9999, parseInt(input.value) || 0)
+    );
+
+    updateCart();
+
+    document.querySelector(".cartbar").scrollIntoView({
+      behavior:"smooth",
+      block:"nearest"
+    });
+  };
+
+  root.appendChild(card);
+});
+
+function updateCart() {
+  let count = 0;
+  let total = 0;
+
+  items.forEach(item => {
+    count += cart[item.level] || 0;
+    total += (cart[item.level] || 0) * item.price;
+  });
+
+  document.getElementById("cartCount").textContent = count;
+
+  document.getElementById("total").textContent =
+    "Rp " + total.toLocaleString("id-ID");
+}
+
+// GANTI TEMA
+document.getElementById("theme").onclick = () => {
+  document.body.classList.toggle("light");
+
+  document.getElementById("theme").textContent =
+    document.body.classList.contains("light") ? "☀️" : "🌙";
+};
+
+// GANTI DENGAN NOMOR WHATSAPP ADMIN YANG BENAR
+const WA_NUMBER = "6289649453434";
+
+function wa(message) {
+  const url =
+    "https://wa.me/" + WA_NUMBER +
+    "?text=" + encodeURIComponent(message);
+
+  window.open(url, "_blank");
+}
+
+// CHECKOUT KERANJANG
+document.getElementById("checkout").onclick = () => {
+  const lines = items
+    .filter(item => cart[item.level] > 0)
+    .map(item =>
+      `Level ${item.level}: ${cart[item.level]} tembok x Rp ${item.price}` +
+      ` = Rp ${(cart[item.level] * item.price).toLocaleString("id-ID")}`
+    );
+
+  if (!lines.length) {
+    alert("Pilih jumlah tembok lalu tekan + Keranjang terlebih dahulu.");
+    return;
+  }
+
+  const total = items.reduce(
+    (sum, item) => sum + (cart[item.level] || 0) * item.price,
+    0
+  );
+
+  const message =
+    "Halo Admin WALHALLA STORE, saya ingin order JOKI WALL COC:\n" +
+    lines.join("\n") +
+    "\nTotal estimasi: Rp " + total.toLocaleString("id-ID");
+
+  wa(message);
+};
+
+document.getElementById("chatHero").onclick = event => {
+  event.preventDefault();
+  wa("Halo Admin WALHALLA STORE, saya ingin konsultasi harga JOKI WALL COC.");
+};
+
+document.getElementById("chatFloat").onclick = event => {
+  event.preventDefault();
+  wa("Halo Admin WALHALLA STORE, saya ingin bertanya tentang JOKI WALL COC.");
+};
+</script>
+
+</body>
+</html>
